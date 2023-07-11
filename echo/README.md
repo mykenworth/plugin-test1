@@ -15,6 +15,7 @@ npx cap sync
 
 * [`echo(...)`](#echo)
 * [`openMap(...)`](#openmap)
+* [`getForceUpgrade(...)`](#getforceupgrade)
 * [Interfaces](#interfaces)
 
 </docgen-index>
@@ -46,6 +47,21 @@ openMap(options: OpenMapOptions) => Promise<void>
 | Param         | Type                                                      |
 | ------------- | --------------------------------------------------------- |
 | **`options`** | <code><a href="#openmapoptions">OpenMapOptions</a></code> |
+
+--------------------
+
+
+### getForceUpgrade(...)
+
+```typescript
+getForceUpgrade(filter: string) => Promise<{ results: any; }>
+```
+
+| Param        | Type                |
+| ------------ | ------------------- |
+| **`filter`** | <code>string</code> |
+
+**Returns:** <code>Promise&lt;{ results: any; }&gt;</code>
 
 --------------------
 

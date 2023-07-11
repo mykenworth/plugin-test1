@@ -6,6 +6,6 @@
 CAP_PLUGIN(EchoPlugin, "Echo",
            CAP_PLUGIN_METHOD(echo, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(openMap, CAPPluginReturnPromise);
-           CAP_PLUGIN_METHOD(getForceUpgrade, CAPPluginReturnCallback);
+           CAP_PLUGIN_METHOD(getForceUpgrade, CAPPluginReturnPromise);
            
 )

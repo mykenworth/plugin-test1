@@ -64,6 +64,14 @@ const Home: React.FC = () => {
         >
           Test OpenMap - No Return
         </IonButton>
+        <IonButton
+          id="open-toast"
+          onClick={async () => {
+            await onClickGetForceUpgrade("test");
+          }}
+        >
+          Test GetForceUpgrade
+        </IonButton>
         <IonToast
           trigger="open-toast"
           message={text}
@@ -72,6 +80,15 @@ const Home: React.FC = () => {
       </IonContent>
     </IonPage>
   );
+
+  async function onClickGetForceUpgrade(message: string) {
+    try {
+      const response = await Echo.getForceUpgrade("some filter, if any");
+      setText(`${JSON.stringify(response)}`);
+    } catch (error) {
+      setText(`Something went wrong onClickGetForceUpgrade`);
+    }
+  }
 
   async function onClickOpenMap(message: string) {
     try {

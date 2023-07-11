@@ -1,7 +1,7 @@
 export interface EchoPlugin {
   echo(options: { value: string }): Promise<{ value: string }>;
   openMap(options: OpenMapOptions): Promise<void>;
-  getForceUpgrade(filter: string): Promise<{results: any}>;
+  getForceUpgrade(filter: string): Promise<{ results: any }>;
 }
 
 export interface OpenMapOptions {
