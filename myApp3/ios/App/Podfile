@@ -20,6 +20,7 @@ end
 
 target 'App' do
   capacitor_pods
+  inherit! :search_paths
   # Add your Pods here
 end
 

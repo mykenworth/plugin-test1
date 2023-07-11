@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.7.1)
   - Capacitor (5.1.1):
     - CapacitorCordova
   - CapacitorApp (5.0.5):
@@ -11,6 +12,7 @@ PODS:
   - CapacitorStatusBar (5.0.5):
     - Capacitor
   - Echo (0.0.1):
+    - Alamofire (~> 5.7.1)
     - Capacitor
 
 DEPENDENCIES:
@@ -21,6 +23,10 @@ DEPENDENCIES:
   - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
   - Echo (from `../../../echo`)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
 
 EXTERNAL SOURCES:
   Capacitor:
@@ -39,14 +45,15 @@ EXTERNAL SOURCES:
     :path: "../../../echo"
 
 SPEC CHECKSUMS:
+  Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
   Capacitor: 55956e1199b63efcd7f2dedffa5c6b9129c45aae
   CapacitorApp: 9d91a5a400e4ad8cafe66a02cc9d8073c864d7bb
   CapacitorCordova: b31a46ad379c93a5c04e0598a6164e8cb90c2bb2
   CapacitorHaptics: 4b1a7e1bac1794d1515842d304f9fce46ef5084c
   CapacitorKeyboard: ba4d618d80bf8caef4b9d8a971d714b9ca795e28
   CapacitorStatusBar: 540867ac3c63875b65bebd888f695de50a13a9a2
-  Echo: a08597d44294968d4b5b15e0484ebd31731e475d
+  Echo: 070289a87895fe8bd0f88871cb3aeb260cad08af
 
-PODFILE CHECKSUM: 1f8ebace891e04fc453c8fd3152649da2c0225fa
+PODFILE CHECKSUM: f4512b1ae9081d33334f1b88c33963bb11bc6329
 
 COCOAPODS: 1.11.3
