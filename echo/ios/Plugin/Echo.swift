@@ -6,20 +6,17 @@ import Foundation
         return value
     }
     
-//    @objc public func openSomething(_ value: TestStruct) -> String {
-//        
-//        let jsonData = try JSONEncoder().encode(testStruct)
-//        let jsonString = String(data: jsonData, encoding: .utf8)!
-//        print(jsonString) // [{"sentence":"Hello world","lang":"en"},{"sentence":"Hallo Welt","lang":"de"}]
-//        
-//        return value
-//    }
+    // notice that the @obc decorator is removed
+    public func openSomethingStruct(_ value: TestStruct) -> String {
+                let jsonData = try! JSONEncoder().encode(value)
+                let jsonString = String(data: jsonData, encoding: .utf8)!
+        return jsonString
+    }
     
-//    public func openSomething(_ value: TestClass) -> String {
-//        let jsonData = try JSONEncoder().encode(value)
-//        let jsonString = String(data: jsonData, encoding: .utf8)!
-//        print(jsonString) // [{"sentence":"Hello world","lang":"en"},{"sentence":"Hallo Welt","lang":"de"}]
-//
-//        return jsonString
-//    }
+    @objc public func openSomethingClass(_ value: TestClass) -> String {
+        let jsonData = try! JSONEncoder().encode(value)
+        let jsonString = String(data: jsonData, encoding: .utf8)!
+
+        return jsonString
+    }
 }

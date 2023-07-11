@@ -4,6 +4,7 @@ import {
   IonHeader,
   IonPage,
   IonTitle,
+  IonToast,
   IonToolbar,
 } from "@ionic/react";
 import ExploreContainer from "../components/ExploreContainer";
@@ -18,17 +19,17 @@ export interface OpenMapOptions {
 }
 
 const Home: React.FC = () => {
-  const [text, setText] = React.useState("Initial button value");
+  const [text, setText] = React.useState("Watch me change!");
   const [testData, setTestData] = useState("");
   const [testOpenMap, setTestOpenMap] = useState<any>();
 
-  useEffect(() => {
-    async function apiCall() {
-      // const apiResponse = await getEcho("I am groot");
-      // setTestData(apiResponse.value);
-    }
-    apiCall();
-  }, []);
+  // useEffect(() => {
+  //   async function apiCall() {
+  //     // const apiResponse = await getEcho("I am groot");
+  //     // setTestData(apiResponse.value);
+  //   }
+  //   apiCall();
+  // }, []);
 
   return (
     <IonPage>
@@ -47,6 +48,7 @@ const Home: React.FC = () => {
         <div> {testData}</div>
         <div> {text}</div>
         <IonButton
+          id="open-toast"
           onClick={async () => {
             await onClick("Example");
           }}
@@ -55,35 +57,31 @@ const Home: React.FC = () => {
         </IonButton>
         <div> {testOpenMap ? JSON.stringify(testOpenMap) : ""}</div>
         <IonButton
+          id="open-toast"
           onClick={async () => {
             await onClickOpenMap("test");
           }}
         >
           Test OpenMap - No Return
         </IonButton>
+        <IonToast
+          trigger="open-toast"
+          message={text}
+          duration={5000}
+        ></IonToast>
       </IonContent>
     </IonPage>
   );
 
   async function onClickOpenMap(message: string) {
     try {
-      console.log(`onClickOpenMap2: ${message}`);
-      debugger;
-      // const xx = new OpenMapOptions(latitude: 11)
-      // const newObject = new OpenMapOptions(latitude: 111, longitude: 222);
-
       const response = await Echo.openMap({
         latitude: 111,
         longitude: 222,
       });
-
-      console.log(`onClickOpenMap3 response: ${JSON.stringify(response)}`);
-      // testOpenMap("This is new value.");
-      // setText(`${apiResponse.value}`);
-
-      console.log(`onClick3: ${message}`);
+      setText(`${JSON.stringify(response)}`);
     } catch (error) {
-      console.log(`error from catch: ${error}`);
+      setText(`Something went wrong onClickOpenMap`);
     }
   }
 
@@ -93,13 +91,12 @@ const Home: React.FC = () => {
   }
 
   async function onClick(message: string) {
-    console.log(`onClick1: ${message}`);
-    debugger;
-    console.log(`onClick2: ${message}`);
-    const apiResponse = await getEcho("This is new value.");
-    setText(`${apiResponse.value}`);
-
-    console.log(`onClick3 onClick echo: ${JSON.stringify(apiResponse)}`);
+    try {
+      const apiResponse = await getEcho("onClick is fired!");
+      setText(`${apiResponse.value}`);
+    } catch (error) {
+      setText(`Something went wrong onClick`);
+    }
   }
 };
 

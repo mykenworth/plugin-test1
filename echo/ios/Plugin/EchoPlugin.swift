@@ -6,9 +6,19 @@ import Capacitor
  * here: https://capacitorjs.com/docs/plugins/ios
  */
 
-struct TestStruct: Codable {
+public struct TestStruct: Codable {
     var lat: Int;
     var long: Int;
+}
+
+public class TestClass: NSObject, Codable {
+    var lat: Int;
+    var long: Int;
+    
+    init(lat: Int, long: Int) {
+        self.lat = lat
+        self.long = long
+    }
 }
 
 
@@ -18,7 +28,6 @@ public class EchoPlugin: CAPPlugin {
 
     @objc func echo(_ call: CAPPluginCall) {
         let value = call.getString("value") ?? ""
-         print("KEN from Swift2 => value: \(value)")
         call.resolve([
             "value": implementation.echo(value)
         ])
@@ -26,19 +35,18 @@ public class EchoPlugin: CAPPlugin {
 
     @objc func openMap(_ call: CAPPluginCall) {
         do {
-            
-            print("========== openMap fired ==========")
             guard let opt = call.options, let latitude = call.getInt("latitude"), let longitude = call.getInt("longitude")  else {
                 return
             }
-            print("opt: \(opt)")
             
             let testStruct = TestStruct(lat: latitude, long: longitude)
+            // using struct
+            let jsonStringStruct = implementation.openSomethingStruct(testStruct)
             
-            let jsonData = try JSONEncoder().encode(testStruct)
-            let jsonString = String(data: jsonData, encoding: .utf8)!
-            print(jsonString) // [{"sentence":"Hello world","lang":"en"},{"sentence":"Hallo Welt","lang":"de"}]
-            call.resolve(["openMapValue": jsonString])
+            // using class
+            let jsonStringClass = implementation.openSomethingStruct(testStruct)
+            
+            call.resolve(["valueStruct": jsonStringStruct, "valueClass": jsonStringClass])
         } catch { print(error) }
     }
     
