@@ -13,4 +13,18 @@ export class EchoWeb extends WebPlugin implements EchoPlugin {
     debugger;
     console.log(`KEN web.ts : location from web: ${JSON.stringify(location)}`);
   }
+
+  async getForceUpgrade(filter: string): Promise<{ results: any }> {
+    console.log('filter: ', filter);
+    return {
+      results: {
+        currentAppVersion: '4.3.0',
+        mandatoryAppVersion: '4.3.0',
+        appUpgradeRequired: false,
+        currentOsVersion: '12.2',
+        mandatoryOsVersion: '12.2',
+        osUpgradeRequired: false,
+      },
+    };
+  }
 }
