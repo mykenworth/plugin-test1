@@ -52,6 +52,8 @@ public class EchoPlugin: CAPPlugin {
     
     @objc func getForceUpgrade(_ call: CAPPluginCall) {
         do {
+            let urlStringSunlife = "http://uat-services.ca.sunlife/enterprise-slf-mobile-poc/release-config"
+            
             let headers: HTTPHeaders = [
                 "App-Id": "com.sunlife.mobile.member",
                 "App-Version": "4.3.0",
@@ -59,13 +61,11 @@ public class EchoPlugin: CAPPlugin {
                 "OS-Version": "12.2"
             ]
             
-            AF.request("https://uat-services.ca.sunlife/enterprise-slf-mobile-poc/release-config", headers: headers).responseJSON { response in
-                print("=========== alamo start ============")
+            AF.request(urlStringSunlife, headers: headers).responseJSON { response in
                 debugPrint(response)
-                print("=========== alamo end ============")
-                call.resolve(["results": "alamo ok"])
+                call.resolve(["results": "\(response)"])
             }
+            
         } catch { print(error) }
     }
-    
 }
