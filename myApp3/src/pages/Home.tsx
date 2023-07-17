@@ -2,10 +2,18 @@ import {
   IonButton,
   IonContent,
   IonHeader,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
   IonPage,
   IonTitle,
   IonToast,
   IonToolbar,
+  useIonViewDidEnter,
+  useIonViewDidLeave,
+  useIonViewWillEnter,
+  useIonViewWillLeave,
 } from "@ionic/react";
 import ExploreContainer from "../components/ExploreContainer";
 import "./Home.css";
@@ -20,16 +28,33 @@ export interface OpenMapOptions {
 
 const Home: React.FC = () => {
   const [text, setText] = React.useState("Watch me change!");
+  const [forceUpgradeInfos, setForceUpgradeInfos] = useState({
+    appUpgradeRequired: undefined,
+    currentAppVersion: "",
+    currentOsVersion: "",
+    mandatoryAppVersion: "",
+    mandatoryOsVersion: "",
+    osUpgradeRequired: undefined,
+  });
+
   const [testData, setTestData] = useState("");
   const [testOpenMap, setTestOpenMap] = useState<any>();
 
-  // useEffect(() => {
-  //   async function apiCall() {
-  //     // const apiResponse = await getEcho("I am groot");
-  //     // setTestData(apiResponse.value);
-  //   }
-  //   apiCall();
-  // }, []);
+  useIonViewDidEnter(() => {
+    console.log("ionViewDidEnter event fired");
+  });
+
+  useIonViewDidLeave(() => {
+    console.log("ionViewDidLeave event fired");
+  });
+
+  useIonViewWillEnter(() => {
+    console.log("ionViewWillEnter event fired");
+  });
+
+  useIonViewWillLeave(() => {
+    console.log("ionViewWillLeave event fired");
+  });
 
   return (
     <IonPage>
@@ -38,45 +63,58 @@ const Home: React.FC = () => {
           <IonTitle>Blank</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent className="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
+            <IonTitle size="large">Sample API</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer />
-        <div> {testData}</div>
-        <div> {text}</div>
-        <IonButton
-          id="open-toast"
-          onClick={async () => {
-            await onClick("Example");
-          }}
-        >
-          Test Echo (Change Data)
-        </IonButton>
-        <div> {testOpenMap ? JSON.stringify(testOpenMap) : ""}</div>
-        <IonButton
-          id="open-toast"
-          onClick={async () => {
-            await onClickOpenMap("test");
-          }}
-        >
-          Test OpenMap - No Return
-        </IonButton>
+        <IonList>
+          <IonItem>
+            <IonLabel>osUpgradeRequired:</IonLabel>
+            <IonInput
+              type="text"
+              value={convertNum(forceUpgradeInfos.osUpgradeRequired)}
+            />
+          </IonItem>
+          <IonItem>
+            <IonLabel>CurrentAppVersion:</IonLabel>
+            <IonInput type="text" value={forceUpgradeInfos.currentAppVersion} />
+          </IonItem>
+          <IonItem>
+            <IonLabel>currentOsVersion:</IonLabel>
+            <IonInput type="text" value={forceUpgradeInfos.currentOsVersion} />
+          </IonItem>
+          <IonItem>
+            <IonLabel>mandatoryAppVersion:</IonLabel>
+            <IonInput
+              type="text"
+              value={forceUpgradeInfos.mandatoryAppVersion}
+            />
+          </IonItem>
+          <IonItem>
+            <IonLabel>mandatoryOsVersion:</IonLabel>
+            <IonInput
+              type="text"
+              value={forceUpgradeInfos.mandatoryOsVersion}
+            />
+          </IonItem>
+          <IonItem>
+            <IonLabel>osUpgradeRequired:</IonLabel>
+            <IonInput
+              type="text"
+              value={convertNum(forceUpgradeInfos.osUpgradeRequired)}
+            />
+          </IonItem>
+        </IonList>
         <IonButton
           id="open-toast"
           onClick={async () => {
             await onClickGetForceUpgrade("test");
           }}
         >
-          Test GetForceUpgrade
+          Fetch GetForceUpgrade
         </IonButton>
-        <IonToast
-          trigger="open-toast"
-          message={text}
-          duration={5000}
-        ></IonToast>
       </IonContent>
     </IonPage>
   );
@@ -84,21 +122,11 @@ const Home: React.FC = () => {
   async function onClickGetForceUpgrade(message: string) {
     try {
       const response = await Echo.getForceUpgrade("some filter, if any");
-      setText(`${JSON.stringify(response)}`);
+      setForceUpgradeInfos((items) => ({
+        ...response.results,
+      }));
     } catch (error) {
       setText(`Something went wrong onClickGetForceUpgrade`);
-    }
-  }
-
-  async function onClickOpenMap(message: string) {
-    try {
-      const response = await Echo.openMap({
-        latitude: 111,
-        longitude: 222,
-      });
-      setText(`${JSON.stringify(response)}`);
-    } catch (error) {
-      setText(`Something went wrong onClickOpenMap`);
     }
   }
 
@@ -107,13 +135,12 @@ const Home: React.FC = () => {
     return testValue;
   }
 
-  async function onClick(message: string) {
-    try {
-      const apiResponse = await getEcho("onClick is fired!");
-      setText(`${apiResponse.value}`);
-    } catch (error) {
-      setText(`Something went wrong onClick`);
+  function convertNum(num: number | undefined): string {
+    if (num == undefined || num == null || Number.isNaN(num)) {
+      return "";
     }
+
+    return num === 1 ? "true" : "false";
   }
 };
 
