@@ -122,9 +122,11 @@ const Home: React.FC = () => {
   async function onClickGetForceUpgrade(message: string) {
     try {
       const response = await Echo.getForceUpgrade("some filter, if any");
+      console.log(`response in JS:::: ${JSON.stringify(response)}`);
       setForceUpgradeInfos((items) => ({
         ...response.results,
       }));
+      console.log(`get:::: ${JSON.stringify(forceUpgradeInfos)}`);
     } catch (error) {
       setText(`Something went wrong onClickGetForceUpgrade`);
     }

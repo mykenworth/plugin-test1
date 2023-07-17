@@ -62,8 +62,17 @@ public class EchoPlugin: CAPPlugin {
             ]
             
             AF.request(urlStringSunlife, headers: headers).responseJSON { response in
-                debugPrint(response)
-                call.resolve(["results": "\(response)"])
+                debugPrint(response.result)
+                switch response.result {
+                case .success:
+                    guard let items = response.value else {
+                        return
+                    }
+        
+                    call.resolve(["results": items])
+                case .failure:
+                    call.resolve(["results": ""])
+                }
             }
             
         } catch { print(error) }
