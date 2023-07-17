@@ -1,3 +1,18 @@
+// import React, { Component } from 'react';
+
+// class About extends Component {
+  
+//   render() {
+//     return (
+//         <div>
+//           <h2>About</h2>
+//         </div>
+//     );
+//   }
+// }
+
+// export default About;
+
 import {
   IonButton,
   IonContent,
@@ -26,8 +41,25 @@ export interface OpenMapOptions {
   longitude: number;
 }
 
-const Home: React.FC = () => {
-  
+const About: React.FC = () => {
+  // This will run one time after the component mounts
+  useEffect(() => {
+    // callback function to call when event triggers
+    const onPageLoad = () => {
+      console.log("page loaded on about");
+      // do something else
+    };
+
+    // Check if the page has already loaded
+    if (document.readyState === "complete") {
+      onPageLoad();
+    } else {
+      window.addEventListener("load", onPageLoad, false);
+      // Remove the event listener when component unmounts
+      return () => window.removeEventListener("load", onPageLoad);
+    }
+  }, []);
+
   const [text, setText] = React.useState("Watch me change!");
   const [forceUpgradeInfos, setForceUpgradeInfos] = useState({
     appUpgradeRequired: undefined,
@@ -116,7 +148,7 @@ const Home: React.FC = () => {
         >
           Fetch GetForceUpgrade
         </IonButton>
-        {/* <IonButton href="/about">About</IonButton> */}
+        <IonButton href="/about">About</IonButton>
       </IonContent>
     </IonPage>
   );
@@ -146,4 +178,4 @@ const Home: React.FC = () => {
   }
 };
 
-export default Home;
+export default About;
